@@ -1,4 +1,4 @@
-# Contributing to Soenneker.Dtos.ProblemDetails
+﻿# Contributing to Soenneker.Dtos.ProblemDetails
 
 We're excited that you're interested in contributing!
 
