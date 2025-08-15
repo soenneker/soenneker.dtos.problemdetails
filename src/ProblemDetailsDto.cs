@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
+using Soenneker.Attributes.PublicOpenApiObject;
 
 namespace Soenneker.Dtos.ProblemDetails;
 
 /// <summary>
 /// A replication of .NET's ProblemDetails (https://tools.ietf.org/html/rfc7807) that doesn't rely on Microsoft.AspNetCore.Mvc.
 /// </summary>
+[PublicOpenApiObject]
 public record ProblemDetailsDto
 {
     /// <summary>
