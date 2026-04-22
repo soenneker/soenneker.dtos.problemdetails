@@ -1,16 +1,15 @@
-using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.Dtos.ProblemDetails.Tests;
 
-[Collection("Collection")]
-public class ProblemDetailsDtoTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public class ProblemDetailsDtoTests : HostedUnitTest
 {
-    public ProblemDetailsDtoTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public ProblemDetailsDtoTests(Host host) : base(host)
     {
     }
 
-    [Fact]
+    [Test]
     public void Default()
     {
 
