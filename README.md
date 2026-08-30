@@ -5,7 +5,7 @@
 
 # Soenneker.Dtos.ProblemDetails
 
-Describes a machine-readable API error without requiring a dependency on ASP.NET Core MVC's problem-details type.
+A serializer-friendly problem-details DTO for APIs and clients that do not want a dependency on ASP.NET Core MVC's `ProblemDetails` type. It supports both `System.Text.Json` and Newtonsoft.Json.
 
 ## Install
 
@@ -13,21 +13,38 @@ Describes a machine-readable API error without requiring a dependency on ASP.NET
 dotnet add package Soenneker.Dtos.ProblemDetails
 ```
 
-## What you get
+## Create a problem response
 
-- `ProblemDetailsDto` — Describes a machine-readable API error without requiring a dependency on ASP.NET Core MVC's problem-details type.
+```csharp
+using Soenneker.Dtos.ProblemDetails;
 
-## API at a glance
+var problem = new ProblemDetailsDto
+{
+    Type = "https://api.example.com/problems/invalid-order",
+    Title = "The order is invalid",
+    Status = 400,
+    Detail = "At least one line item is required.",
+    Instance = "/orders/8f25"
+};
 
-| API | What it does | Result / important behavior |
-| --- | --- | --- |
-| `ProblemDetailsDto.Type` | URI reference that identifies the problem category and may resolve to human-readable documentation. When omitted, clients may treat it as `about:blank`. | URI reference that identifies the problem category and may resolve to human-readable documentation. When omitted, clients may treat it as `about:blank`. |
-| `ProblemDetailsDto.Title` | Short, human-readable summary of the problem category. It should remain consistent across occurrences except when localized. | Short, human-readable summary of the problem category. It should remain consistent across occurrences except when localized. |
-| `ProblemDetailsDto.Status` | HTTP status code generated for this occurrence of the problem. | HTTP status code generated for this occurrence of the problem. |
-| `ProblemDetailsDto.Detail` | A human-readable explanation specific to this occurrence of the problem. | A human-readable explanation specific to this occurrence of the problem. |
-| `ProblemDetailsDto.Instance` | URI reference that identifies this specific occurrence of the problem and may resolve to additional information. | URI reference that identifies this specific occurrence of the problem and may resolve to additional information. |
-| `ProblemDetailsDto.Extensions` | Additional problem-specific members serialized alongside the standard fields. Problem type definitions MAY extend the problem details object with additional members. Extension members appear in the same namespace as other members of a problem type. | The round-tripping behavior for `Extensions` is determined by the implementation of the Input \ Output formatters. In particular, complex types or collection types may not round-trip to the original type when using the built-in JSON or XML formatters. |
+problem.Extensions["orderId"] = "8f25";
+problem.Extensions["retryable"] = false;
+```
 
-## Important behavior
+Extension entries are flattened into the top-level JSON object:
 
-- `ProblemDetailsDto.Extensions`: The round-tripping behavior for `Extensions` is determined by the implementation of the Input \ Output formatters. In particular, complex types or collection types may not round-trip to the original type when using the built-in JSON or XML formatters.
+```json
+{
+  "type": "https://api.example.com/problems/invalid-order",
+  "title": "The order is invalid",
+  "status": 400,
+  "detail": "At least one line item is required.",
+  "instance": "/orders/8f25",
+  "orderId": "8f25",
+  "retryable": false
+}
+```
+
+All standard members are optional. Newtonsoft.Json omits null standard members because its attributes specify `NullValueHandling.Ignore`; with `System.Text.Json`, null omission follows the options supplied to your serializer.
+
+`Status` is payload data only—it does not set an HTTP response's status code. When deserializing, extension values may materialize as serializer-specific types such as `JsonElement` or `JToken`, so avoid assuming they round-trip to their original CLR types.

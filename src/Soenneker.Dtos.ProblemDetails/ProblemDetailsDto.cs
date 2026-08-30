@@ -48,17 +48,16 @@ public record ProblemDetailsDto
     public string? Instance { get; set; }
 
     /// <summary>
-    /// Additional problem-specific members serialized alongside the standard fields.
+    /// Additional problem-specific members serialized alongside the standard fields rather than under an <c>extensions</c> property.
     /// <para>
     /// Problem type definitions MAY extend the problem details object with additional members. Extension members appear in the same namespace as
     /// other members of a problem type.
     /// </para>
     /// </summary>
     /// <remarks>
-    /// The round-tripping behavior for <see cref="Extensions"/> is determined by the implementation of the Input \ Output formatters.
-    /// In particular, complex types or collection types may not round-trip to the original type when using the built-in JSON or XML formatters.
+    /// The runtime types produced while deserializing extension values depend on the selected serializer.
     /// </remarks>
     [System.Text.Json.Serialization.JsonExtensionData]
     [Newtonsoft.Json.JsonExtensionData]
-    public IDictionary<string, object>? Extensions { get; } = new Dictionary<string, object>(StringComparer.Ordinal);
+    public IDictionary<string, object> Extensions { get; } = new Dictionary<string, object>(StringComparer.Ordinal);
 }
