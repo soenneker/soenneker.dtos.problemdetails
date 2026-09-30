@@ -5,7 +5,7 @@
 
 # Soenneker.Dtos.ProblemDetails
 
-A serializer-friendly problem-details DTO for APIs and clients that do not want a dependency on ASP.NET Core MVC's `ProblemDetails` type. It supports both `System.Text.Json` and Newtonsoft.Json.
+A serializer-friendly problem-details DTO for APIs and clients that do not want a dependency on ASP.NET Core MVC's `ProblemDetails` type. It supports `System.Text.Json`.
 
 ## Install
 
@@ -45,6 +45,6 @@ Extension entries are flattened into the top-level JSON object:
 }
 ```
 
-All standard members are optional. Newtonsoft.Json omits null standard members because its attributes specify `NullValueHandling.Ignore`; with `System.Text.Json`, null omission follows the options supplied to your serializer.
+All standard members are optional. With `System.Text.Json`, null omission follows the options supplied to your serializer.
 
-`Status` is payload data only—it does not set an HTTP response's status code. When deserializing, extension values may materialize as serializer-specific types such as `JsonElement` or `JToken`, so avoid assuming they round-trip to their original CLR types.
+`Status` is payload data only—it does not set an HTTP response's status code. When deserializing, extension values may materialize as serializer-specific types such as `JsonElement`, so avoid assuming they round-trip to their original CLR types.
