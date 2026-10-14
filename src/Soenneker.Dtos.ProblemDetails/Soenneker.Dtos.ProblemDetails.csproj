@@ -45,7 +45,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.Attributes.PublicOpenApiObject" Version="4.0.58" />
+        <PackageReference Include="Soenneker.Attributes.PublicOpenApiObject" Version="4.0.63" />
         <PackageReference Include="System.Text.Json" Version="10.0.13" />
     </ItemGroup>
 </Project>
