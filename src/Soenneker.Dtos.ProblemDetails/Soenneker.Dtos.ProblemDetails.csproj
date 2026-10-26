@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net11.0</TargetFramework>
         <IsAotCompatible>true</IsAotCompatible>
         <Nullable>enable</Nullable>
         <Platforms>AnyCPU</Platforms>
@@ -9,7 +9,7 @@
 
     <PropertyGroup>
         <Description>A replication of .NET's ProblemDetails (https://tools.ietf.org/html/rfc7807) that doesn't rely on Microsoft.AspNetCore.Mvc.</Description>
-        <Version Condition="'$(BUILD_VERSION)' == ''">4.0.0</Version>
+        <Version Condition="'$(BUILD_VERSION)' == ''">11.0.0</Version>
         <Version Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</Version>
         <AssemblyName>Soenneker.Dtos.ProblemDetails</AssemblyName>
         <PackageId>Soenneker.Dtos.ProblemDetails</PackageId>
@@ -46,6 +46,5 @@
 
     <ItemGroup>
         <PackageReference Include="Soenneker.Attributes.PublicOpenApiObject" Version="4.0.64" />
-        <PackageReference Include="System.Text.Json" Version="10.0.14" />
     </ItemGroup>
 </Project>
